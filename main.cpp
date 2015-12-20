@@ -249,6 +249,43 @@ void test_q1_1() {
 // Q3: word count every word in a file
 
 
+// CCIp54: given a string, generate all permutations of all characters in the string
+
+vector<string> add_char(vector<string> orig_perms, string c) {
+  vector<string> new_perms;
+  for (auto p : orig_perms) {
+    for (int i = 0, N = p.size()+1; i < N; ++i) {
+      string p_copy(p);
+      auto tmp = p_copy.insert(i, c);
+      //cout << tmp << endl;
+      //cout << p << endl;
+      new_perms.push_back(tmp);
+    }
+  }
+  return new_perms;
+}
+vector<string> get_perms(string orig) {
+  vector<string> perms;
+  perms.push_back(string(1, orig[0]));
+
+  for (int i = 1, N = orig.size(); i < N; ++i) {
+    perms = add_char(perms, string(1,orig[i]));
+  }
+
+  return perms;
+}
+
+void test_CCIp54() {
+  auto orig = "abc";
+  auto perms = get_perms(orig);
+  cout << "perms:";
+  for (auto p : perms) {
+    cout << " " << p;
+  }
+  cout << "\n";
+}
+
+
 int main(int argc, char** argv) {
 
   //int arr[] = {0, 1, 2, 3};
@@ -271,7 +308,9 @@ int main(int argc, char** argv) {
   
   //count_all_words("words.txt");
 
-  test_q1_1();
+  //test_q1_1();
+
+  test_CCIp54();
 
   return 0;
 }
