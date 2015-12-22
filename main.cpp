@@ -28,11 +28,13 @@ class BinNode {
     BinNode* rightChild = nullptr;
     BinNode(int x) : data(x) {}
 };
+
 class BinTree {
+  protected:
   BinNode* root = nullptr;
   public:
   BinTree() { }
-  void insert(int x) {
+  virtual void insert(int x) {
     if (!root) {
       root = new BinNode(x);
     } else {
@@ -645,6 +647,168 @@ void test_CCI_2_2() {
   cout << found->data << endl;
 }
 
+class BinNodeHeight {
+  private:
+  public:
+    int height = 0;
+    int data;
+    BinNodeHeight* leftChild = nullptr;
+    BinNodeHeight* rightChild = nullptr;
+    BinNodeHeight(int x) : data(x) {}
+    void updateHeight() {
+      if (leftChild == nullptr && rightChild == nullptr) {
+        height = 0;
+      } else if (leftChild != nullptr && rightChild != nullptr) {
+        leftChild->updateHeight();
+        rightChild->updateHeight();
+        height = max(leftChild->height, rightChild->height) + 1;
+      } else if (rightChild != nullptr) {
+        rightChild->updateHeight();
+        height = rightChild->height + 1;
+      } else {
+        leftChild->updateHeight();
+        height = leftChild->height + 1;
+      }
+    }
+    bool isBalanced() {
+      int leftH = -1, rightH = -1;
+      if (leftChild) {
+        leftH = leftChild->height;
+      }
+      if (rightChild) {
+        rightH = rightChild->height;
+      }
+
+      if (abs(leftH - rightH) > 1) {
+        return false;
+      }
+      return true;
+    }
+};
+
+template<class T>
+class BinTreeT {
+  public:
+  T* root = nullptr;
+  void insert(int x) {
+    if (!root) {
+      root = new T(x);
+    } else {
+      recInsert(x, root);
+    }
+  }
+  void recInsert(int x, T* curr) {
+    if (x <= curr->data) {
+      if (!curr->leftChild) {
+        curr->leftChild = new T(x);
+      } else {
+        recInsert(x, curr->leftChild);
+      }
+    } else {
+      if (!curr->rightChild) {
+        curr->rightChild = new T(x);
+      } else {
+        recInsert(x, curr->rightChild);
+      }
+    }
+  }
+  void updateHeights() {
+    if (root) {
+      root->updateHeight();
+    }
+  }
+  void print() {
+    recPrint(root);
+    cout << "\n";
+  }
+  void recPrint(T* curr) {
+    if (curr->leftChild) {
+      recPrint(curr->leftChild);
+    }
+    cout << curr->data << " ";
+    if (curr->rightChild) {
+      recPrint(curr->rightChild);
+    }
+  }
+  void treePrint() {
+    vector <T*> worklist;
+    if (root) {
+      worklist.push_back(root); 
+      recTreePrint(worklist);
+    }
+  }
+  void recTreePrint(vector<T*>& worklist) {
+    vector<T*> nextList;
+    for (auto i : worklist) {
+      cout << i->height << " ";
+      if (i->leftChild) {
+        nextList.push_back(i->leftChild);
+      }
+      if (i->rightChild) {
+        nextList.push_back(i->rightChild);
+      }
+    }
+    cout << endl;
+    if (nextList.size()) {
+      recTreePrint(nextList);
+    }
+  }
+
+  bool isBalanced() {
+    vector <T*> worklist;
+    if (root) {
+      worklist.push_back(root); 
+      if (!root->isBalanced()) {
+        return false;
+      }
+      return recIsBalanced(worklist);
+    }
+    return false;
+  }
+  bool recIsBalanced(vector<T*> worklist) {
+    vector<T*> newList;
+    for (auto i : worklist) {
+      if (!i->isBalanced()) {
+        return false;
+      } 
+      if (i->leftChild) {
+        newList.push_back(i->leftChild);
+      }
+      if (i->rightChild) {
+        newList.push_back(i->rightChild);
+      }
+    }
+    if (worklist.size()) {
+      return recIsBalanced(newList);
+    }
+    return true;
+  }
+};
+
+void test_CCI_4_1() {
+  // check if a binary tree is balanced
+  auto tree = new BinTreeT<BinNodeHeight>();
+  tree->insert(10);
+  tree->insert(3);
+  tree->insert(1);
+  tree->insert(99);
+  tree->insert(98);
+  tree->insert(100);
+  tree->updateHeights();
+  tree->print();
+  tree->treePrint();
+  //cout << tree->root->height << endl;
+  cout << tree->isBalanced() << endl;
+  tree->insert(101);
+  tree->insert(102);
+  tree->insert(103);
+  tree->updateHeights();
+  tree->print();
+  tree->treePrint();
+  //cout << tree->root->height << endl;
+  cout << tree->isBalanced() << endl;
+}
+
 int main(int argc, char** argv) {
 
   //int arr[] = {0, 1, 2, 3};
@@ -678,7 +842,9 @@ int main(int argc, char** argv) {
   //test_CCI1_5();
   //test_CCI1_6();
   //test_CCI_2_1();
-  test_CCI_2_2();
+  //test_CCI_2_2();
+  
+  test_CCI_4_1();
 
   return 0;
 }
