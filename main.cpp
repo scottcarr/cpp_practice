@@ -809,6 +809,117 @@ void test_CCI_4_1() {
   cout << tree->isBalanced() << endl;
 }
 
+int count_steps(int n) {
+  // this is n^3 which isnt very good
+  int ways = 0;
+
+  for (int threes = 0; threes < n; threes++) {
+    for (int twos = 0; twos < n; twos++) {
+      for (int ones = 0; ones <= n; ones++) {
+        int total = 3*threes+2*twos+1*ones;
+        if (total == n) {
+          ways++;
+        }
+      }
+    }
+  }
+  return ways;
+}
+
+void test_CCI_9_1() {
+  // a child can go up a staircase of n steps 1,2, or 3 steps at a time
+  // calculate how many different ways the child can climb the staircase
+  
+  cout << count_steps(1) << endl;
+  cout << count_steps(2) << endl;
+  cout << count_steps(3) << endl;
+}
+
+int count_paths(int X, int Y) {
+  // 0 1 2
+  // 3 4 5
+  // 6 7 8
+  //
+  // paths: 
+  // 0-1-2-5-8 
+  // 0-1-4-5-8 
+  // 0-1-4-7-8 
+  // 0-3-4-5-8
+  // 0-3-4-7-8
+  // 0-3-6-7-8
+  //
+  // 0 1 
+  // 2 3
+  //
+  // two paths 0-1-3 0-2-3
+  
+  // 0
+  // 1
+  // one path
+  //
+  // 0 1 2
+  // 3 4 5
+  //
+  // 0-1-2-5
+  // 0-1-4-5
+  // 0-3-4-5
+  
+  if (X == 1 || Y == 1) {
+    return 1;
+  }
+  int down = count_paths(X-1, Y);
+  int right = count_paths(X, Y-1);
+  return down + right;
+}
+
+void test_CCI_9_2() {
+  // imagine a robot sitting in the upper left corner of an X by Y grid
+  // the robot can only move down and right
+  // how many possible paths are there from (0,0) to (X, Y)
+  
+  cout << count_paths(2,2) << endl;
+  cout << count_paths(2,3) << endl;
+  cout << count_paths(3,2) << endl;
+  cout << count_paths(3,3) << endl;
+  
+  
+}
+
+int findMagicRec(vector<int> A, int start, int end) {
+  int guess = (end-start)/2 + start;
+  if (A[guess] == guess) {
+    return guess;
+  } else if (A[guess] < guess) {
+    return findMagicRec(A, guess+1, end);
+  } else {
+    return findMagicRec(A, start, guess-1);
+  }
+}
+
+int find_magic(vector<int> A) {
+
+  // if we have A[i] < i for some i
+  // then the magic value must be to the right
+  // if we have A[i] > i then the magic value must be to the left
+  
+  return findMagicRec(A, 0, A.size()-1);
+}
+
+
+void test_CCI_9_3() {
+  // given a sorted array A, find i such that A[i] = i if it exists
+  
+  int init[] = {0, 0, 0, 3, 6, 7, 8, 9};
+  vector<int> A(init, init + sizeof(init)/sizeof(int));
+  cout << find_magic(A) << endl;
+
+  int init2[] = {0, 0, 1, 2, 3, 5, 8, 9};
+  vector<int> A2(init2, init2 + sizeof(init2)/sizeof(int));
+  cout << find_magic(A2) << endl;
+  
+  
+}
+
 int main(int argc, char** argv) {
 
   //int arr[] = {0, 1, 2, 3};
@@ -844,7 +955,11 @@ int main(int argc, char** argv) {
   //test_CCI_2_1();
   //test_CCI_2_2();
   
-  test_CCI_4_1();
+  //test_CCI_4_1();
+
+  //test_CCI_9_1();
+  //test_CCI_9_2();
+  test_CCI_9_3();
 
   return 0;
 }
