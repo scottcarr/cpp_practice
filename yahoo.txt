@@ -1,0 +1,92 @@
+Reverse a linked list recursively
+1 -> 2-> 3> ->_Null
+3 -> 2-> 1-> null
+
+node* reverse(node* curr) {
+  static node* new_head;
+  // base case: next == null
+  // no more work to do
+  if (curr->next == nullptr) {
+    new_head = curr;
+    return curr;
+  }
+  
+  // otherwise
+  node* end = reverse(curr->next);
+  end->next = curr;
+  
+  return curr;
+  // 1 -> 2 -> 3 = 3 -> 2> -1
+  
+  // reverse(2 -> 3) = 3 -> 2
+  
+  // reverse(3) = 3
+  
+  //step 1:
+  // *curr = 1
+  // reservse (curr) should return 3->2
+  2->next = curr
+  
+  v
+  3->2->1
+
+  curr = 1<-2<-3
+}
+
+node* reserve(nodes* curr) {
+  vector<node*> nodes;
+  
+  while (curr) {
+    nodes.push_back(curr)
+    curr = curr->next;
+  }
+  
+  node* head = nodes.size() - 1;
+  curr = head
+  for (int i = nodes.size - 1; i >= 1; --) {
+    curr->next = nodes[i]
+    curr = nodes[i-1];
+  }
+}
+
+node* reverse(node* head) {
+  doReverse(head, nullptr);
+}
+        curr, prev
+        2-->1 and return 3
+    (2,1) <--here
+      / 3
+    (3,2) 3->2
+          
+          2,1  - tail = 3 2->1 return 3
+              3,2 3->2 return 3
+                  
+        
+
+// walk to the end
+node* doReverse(node* curr, node* prev) {
+  // curr->next = nullptr => end
+  /// curr->next != nullptr => not the end 
+  if (curr->next) {
+    node* tail = doReverse(curr->next, curr);
+    curr->next = prev;
+    return tail;
+  } else {
+    // at end
+    // constuct a new linked list
+    // with head = node
+    curr->next = prev
+    return curr;
+  }
+}
+  
+// step 1 *curr = 1 call doReverse(*2, *1) => *2.next = *1
+// step 2 *curr = 2 call doReverse(*3, *2) => *3.next = *2
+
+3->2->1-> (dangling)
+// step 1 *curr = 1 call doReverse(*2, *1) => *2.next = *1
+// step 2 *curr = 2 call doReverse(*3, *2) => *3.next = *2 return 2 
+
+call 1 3->null
+call 2 3->2->null
+call 3 3->2->1->null
