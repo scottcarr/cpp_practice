@@ -1,3 +1,16 @@
+// language trivia:
+
+// c++
+// what is early/late binding
+// what are virtual descructors/constructors for
+// what are the encapsulation levels
+// what is inline? does the compiler always honot it
+
+// python
+// what are properties
+// what is the signature def fn(debug=None, *args, **kwargs)
+//
+
 Reverse a linked list recursively
 1 -> 2-> 3> ->_Null
 3 -> 2-> 1-> null
