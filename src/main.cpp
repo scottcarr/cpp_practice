@@ -6,6 +6,9 @@
 #include <set>
 #include <math.h>
 #include <assert.h>
+#include <stdio.h>
+#include <string.h>
+
 using namespace std;
 
 int binary_search(int arr[], int target, int low, int high) {
