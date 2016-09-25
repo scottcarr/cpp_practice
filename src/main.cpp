@@ -923,7 +923,13 @@ void test_CCI_9_3() {
   
 }
 
+namespace Yahoo {
 void testLinkedListRev();
+}
+
+namespace Stack {
+void testStack();
+}
 
 int main(int argc, char** argv) {
 
@@ -966,7 +972,8 @@ int main(int argc, char** argv) {
   //test_CCI_9_2();
   //test_CCI_9_3();
 
-  testLinkedListRev();
+  //Yahoo::testLinkedListRev();
+  Stack::testStack();
 
   return 0;
 }

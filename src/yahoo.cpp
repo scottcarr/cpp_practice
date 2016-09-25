@@ -2,6 +2,7 @@
 
 using namespace std;
 
+namespace Yahoo {
 class YahooNode {
 public:
     YahooNode* next = nullptr;
@@ -41,7 +42,7 @@ YahooNode* doReverse(YahooNode* curr, YahooNode* prev) {
 }
 
 YahooNode* reverseList(YahooNode* head) {
-   doReverse(head, nullptr);
+   return doReverse(head, nullptr);
 }
 
 void testLinkedListRev() {
@@ -51,4 +52,5 @@ void testLinkedListRev() {
     YahooNode* r = reverseList(l);
     r->print();
     //cout << "hello world\n";
+}
 }
