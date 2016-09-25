@@ -923,6 +923,8 @@ void test_CCI_9_3() {
   
 }
 
+void testLinkedListRev();
+
 int main(int argc, char** argv) {
 
   //int arr[] = {0, 1, 2, 3};
@@ -962,7 +964,9 @@ int main(int argc, char** argv) {
 
   //test_CCI_9_1();
   //test_CCI_9_2();
-  test_CCI_9_3();
+  //test_CCI_9_3();
+
+  testLinkedListRev();
 
   return 0;
 }
