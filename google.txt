@@ -1,0 +1,9 @@
+number of connected components in a circular linked list that connect a subset of the nodes
+
+//ex:
+// 1->2->3->4->5
+// f({1,3,5]) returns 2 (because 1,5 are one component and 3 is another)
+// 
+
+int num_connected_components(vector<Node*>& nodes) {
+}
